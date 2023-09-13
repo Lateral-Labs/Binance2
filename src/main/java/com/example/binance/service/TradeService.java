@@ -67,10 +67,7 @@ public class TradeService {
 
     private boolean isANewTradeOfSymbol(JsonNode tradeJson) {
         Trade foundTrade = tradeRepository.findByTradeIdInBinance(tradeJson.path("id").asLong());
-        if (foundTrade == null) {
-            return true;
-        }
-        return false;
+        return foundTrade == null;
     }
 
     private Trade convertTradeJsonToTradeObjectAndSave(JsonNode tradeJson, Symbol symbol) {

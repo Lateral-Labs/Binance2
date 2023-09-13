@@ -2,11 +2,15 @@ package com.example.binance.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "trade")
+@Getter
+@Setter
 public class Trade {
 
     @Id
@@ -29,7 +33,7 @@ public class Trade {
     @Column (name = "time")
     private Date time;
 
-    @Column
+    @Column (name = "is_buyer_marker")
     private boolean isBuyerMarker;
 
     @ManyToOne
@@ -40,63 +44,4 @@ public class Trade {
     public Trade() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Long getTradeIdInBinance() {
-        return tradeIdInBinance;
-    }
-
-    public void setTradeIdInBinance(Long tradeIdInBinance) {
-        this.tradeIdInBinance = tradeIdInBinance;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getQty() {
-        return qty;
-    }
-
-    public void setQty(Double qty) {
-        this.qty = qty;
-    }
-
-    public Double getQuoteQty() {
-        return quoteQty;
-    }
-
-    public void setQuoteQty(Double quoteQty) {
-        this.quoteQty = quoteQty;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public boolean isBuyerMarker() {
-        return isBuyerMarker;
-    }
-
-    public void setBuyerMarker(boolean buyerMarker) {
-        isBuyerMarker = buyerMarker;
-    }
-
-    public Symbol getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(Symbol symbol) {
-        this.symbol = symbol;
-    }
 }

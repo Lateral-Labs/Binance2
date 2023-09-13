@@ -77,9 +77,6 @@ public class SymbolService {
         newSymbol.setAskQty(symbolJson.path("askQty").asDouble());
         Long sec = symbolJson.path("time").asLong();
 
-       // SimpleDateFormat dateformatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
-       // Date date = new Date(sec);
-
         Date date2 = new Date(sec);
         newSymbol.setTime(date2);
         return symbolRepository.save(newSymbol);
