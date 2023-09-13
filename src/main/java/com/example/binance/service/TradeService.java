@@ -18,7 +18,6 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TradeService {
@@ -45,7 +44,7 @@ public class TradeService {
         List<Trade> recentTradeList = new ArrayList<>();
 
         for (JsonNode tradeJson : objectMapper.readTree(responseBody)) {
-            if (!isANewTradeOfSymbol(tradeJson, foundSymbol)) {
+            if (isANewTradeOfSymbol(tradeJson)) {
                 recentTradeList.add(convertTradeJsonToTradeObjectAndSave(tradeJson, foundSymbol));
             }
         }
@@ -66,20 +65,13 @@ public class TradeService {
         return responseBody;
     }
 
-    private boolean isANewTradeOfSymbol(JsonNode tradeJson, Symbol symbol) {
+    private boolean isANewTradeOfSymbol(JsonNode tradeJson) {
         Trade foundTrade = tradeRepository.findByTradeIdInBinance(tradeJson.path("id").asLong());
-        if (foundTrade.equals(null)) {
-            return false;
+        if (foundTrade == null) {
+            return true;
         }
-        return true;
+        return false;
     }
-
-//    private static List<Long> getIdsRegisteredTrades(Symbol symbol) {
-//        List<Long> idsRegisteredTrades = symbol.getTrades().stream()
-//                .map(trade -> trade.getTradeIdInBinance())
-//                .collect(Collectors.toList());
-//        return idsRegisteredTrades;
-//    }
 
     private Trade convertTradeJsonToTradeObjectAndSave(JsonNode tradeJson, Symbol symbol) {
 
